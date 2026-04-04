@@ -943,13 +943,13 @@ export default function HomePage() {
               />
             </div>
             {/* Small accent photo — editorial B&W treatment */}
-            <div className="absolute -bottom-6 -right-6 w-40 h-40 lg:w-52 lg:h-52 rounded-2xl overflow-hidden border-4 border-[#FAF7F2] shadow-xl bg-[#2C2C2C]">
+            <div className="absolute -bottom-8 -right-8 w-52 h-52 lg:w-72 lg:h-72 rounded-2xl overflow-hidden border-4 border-[#FAF7F2] shadow-xl bg-[#2C2C2C]">
               <Image
                 src="/models/founder-editorial.jpg"
                 alt="Adrian"
                 fill
-                sizes="(max-width: 1024px) 160px, 208px"
-                className="object-cover object-top grayscale"
+                sizes="(max-width: 1024px) 208px, 288px"
+                className="object-cover object-center grayscale"
               />
             </div>
           </motion.div>
