@@ -17,6 +17,11 @@ const dmSans = DM_Sans({
   weight: ["300", "400", "500"],
 });
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata: Metadata = {
   title: "Aurra Models — Asia's Premier Modelling Agency",
   description:
