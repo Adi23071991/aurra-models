@@ -315,7 +315,7 @@ export default function HomePage() {
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-5 lg:gap-7">
           {models.map((model, i) => (
             <motion.div
               key={model.id}
@@ -923,32 +923,22 @@ export default function HomePage() {
 
       {/* FOUNDER / SCOUT */}
       <section id="about" className="py-24 lg:py-32 px-6 lg:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 items-center lg:items-start">
 
-          {/* Photos */}
+          {/* Small portrait — subtle, editorial */}
           <motion.div
             variants={fadeUp}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true }}
-            className="relative"
+            className="flex-shrink-0"
           >
-            {/* Main photo */}
-            <div className="relative rounded-3xl overflow-hidden aspect-[4/5] bg-[#F0E6D3]">
+            <div className="relative w-52 h-64 lg:w-60 lg:h-72 rounded-2xl overflow-hidden bg-[#2C2C2C] shadow-lg">
               <Image
-                src="/models/founder-bali.jpg"
+                src="/models/adrian-bw.jpg"
                 alt="Adrian — Co-Founder Aurra Models"
                 fill
-                className="object-cover object-top"
-              />
-            </div>
-            {/* Small accent photo — editorial B&W treatment */}
-            <div className="absolute -bottom-8 -right-8 w-52 h-52 lg:w-72 lg:h-72 rounded-2xl overflow-hidden border-4 border-[#FAF7F2] shadow-xl bg-[#2C2C2C]">
-              <Image
-                src="/models/founder-editorial.jpg"
-                alt="Adrian"
-                fill
-                sizes="(max-width: 1024px) 208px, 288px"
+                sizes="(max-width: 1024px) 208px, 240px"
                 className="object-cover object-center grayscale"
               />
             </div>
@@ -961,7 +951,7 @@ export default function HomePage() {
             whileInView="visible"
             viewport={{ once: true }}
             custom={0.15}
-            className="lg:pl-8"
+            className=""
           >
             <span
               className="text-xs tracking-[0.3em] uppercase text-[#C9A96E] mb-4 block"
