@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Aurra Models — Logo Export</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400&display=swap" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: #1a1714; font-family: 'DM Sans', sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; gap: 60px; padding: 60px 40px; }
+
+    .logo-wrap { display: flex; flex-direction: column; gap: 40px; align-items: center; }
+    h1 { color: #8A7F75; font-size: 11px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 300; }
+
+    canvas { border-radius: 8px; display: block; }
+
+    .btn {
+      margin-top: 12px;
+      padding: 10px 28px;
+      border: none;
+      border-radius: 99px;
+      background: #C9A96E;
+      color: #2C2C2C;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn:hover { background: #d4b77a; }
+    .note { color: #8A7F75; font-size: 11px; letter-spacing: 0.1em; margin-top: 6px; }
+  </style>
+</head>
+<body>
+
+<div class="logo-wrap">
+  <h1>Aurra Models — Logo Export</h1>
+
+  <!-- Dark version -->
+  <div style="text-align:center">
+    <p class="note" style="margin-bottom:10px">Dunkle Version (für weißen Hintergrund)</p>
+    <canvas id="canvasDark" width="1200" height="400" style="width:600px;height:200px;background:#FAF7F2;"></canvas>
+    <br>
+    <button class="btn" onclick="download('canvasDark','aurra-models-logo-dark')">PNG herunterladen</button>
+  </div>
+
+  <!-- Light version -->
+  <div style="text-align:center">
+    <p class="note" style="margin-bottom:10px">Helle Version (für dunklen Hintergrund)</p>
+    <canvas id="canvasLight" width="1200" height="400" style="width:600px;height:200px;background:#2C2C2C;"></canvas>
+    <br>
+    <button class="btn" onclick="download('canvasLight','aurra-models-logo-light')">PNG herunterladen</button>
+  </div>
+
+  <!-- Gold version -->
+  <div style="text-align:center">
+    <p class="note" style="margin-bottom:10px">Gold Version (transparent-ready)</p>
+    <canvas id="canvasGold" width="1200" height="400" style="width:600px;height:200px;background:#1a1714;"></canvas>
+    <br>
+    <button class="btn" onclick="download('canvasGold','aurra-models-logo-gold')">PNG herunterladen</button>
+  </div>
+</div>
+
+<script>
+  function drawLogo(canvasId, bg, textColor, subColor) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext('2d');
+    const W = canvas.width;
+    const H = canvas.height;
+
+    // Background
+    ctx.fillStyle = bg;
+    ctx.fillRect(0, 0, W, H);
+
+    // AURRA
+    ctx.fillStyle = textColor;
+    ctx.font = "300 140px 'Cormorant Garamond', Georgia, serif";
+    ctx.letterSpacing = "18px";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText("AURRA", W / 2, H / 2 - 30);
+
+    // MODELS
+    ctx.fillStyle = subColor;
+    ctx.font = "300 22px 'DM Sans', sans-serif";
+    ctx.letterSpacing = "14px";
+    ctx.fillText("MODELS", W / 2 + 7, H / 2 + 70);
+  }
+
+  function download(canvasId, filename) {
+    const canvas = document.getElementById(canvasId);
+    const link = document.createElement('a');
+    link.download = filename + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  }
+
+  // Wait for fonts to load
+  document.fonts.ready.then(() => {
+    drawLogo('canvasDark',  '#FAF7F2', '#2C2C2C', '#8A7F75');
+    drawLogo('canvasLight', '#2C2C2C', '#FAF7F2', '#8A7F75');
+    drawLogo('canvasGold',  '#1a1714', '#C9A96E', '#8A7F75');
+  });
+</script>
+</body>
+</html>
