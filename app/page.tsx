@@ -936,20 +936,20 @@ export default function HomePage() {
             {/* Main photo */}
             <div className="relative rounded-3xl overflow-hidden aspect-[4/5] bg-[#F0E6D3]">
               <Image
-                src="/models/Make_realistic_model_202604041646_3.jpeg"
+                src="/models/founder-bali.jpg"
                 alt="Adrian — Co-Founder Aurra Models"
                 fill
-                className="object-cover object-top brightness-105 contrast-105 saturate-[0.85]"
+                className="object-cover object-top"
               />
             </div>
             {/* Small accent photo — editorial B&W treatment */}
             <div className="absolute -bottom-6 -right-6 w-40 h-40 lg:w-52 lg:h-52 rounded-2xl overflow-hidden border-4 border-[#FAF7F2] shadow-xl bg-[#2C2C2C]">
               <Image
-                src="/models/Model_posing_concrete_202604041646_2.jpeg"
+                src="/models/founder-editorial.jpg"
                 alt="Adrian"
                 fill
                 sizes="(max-width: 1024px) 160px, 208px"
-                className="object-cover object-top grayscale brightness-110 contrast-110"
+                className="object-cover object-top grayscale"
               />
             </div>
           </motion.div>
