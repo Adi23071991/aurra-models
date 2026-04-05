@@ -7,6 +7,7 @@ import Image from "next/image";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { ArrowRight, MapPin, Star } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const fadeUp = {
   hidden: { opacity: 0, y: 32 },
@@ -133,43 +134,17 @@ const models = [
   },
 ];
 
-const steps = [
-  {
-    number: "01",
-    title: "Casting Talk",
-    desc: "We invite you to a relaxed personal conversation — just 15 to 30 minutes. No pressure, no expectations. We simply want to get to know you.",
-    label: "15–30 min",
-  },
-  {
-    number: "02",
-    title: "Your Profile Card",
-    desc: "We create your personal profile card (Kartei) — a private folder that includes an amateur photo series taken by us, plus any of your own favourite private photos you'd like to add. All costs are covered by us. No expenses for you.",
-    label: "No cost for you",
-  },
-  {
-    number: "03",
-    title: "Into the Booking System",
-    desc: "Your profile card enters our booking database. Potential clients can browse it — and they are always informed upfront that these are amateur and personal photos, not a professional editorial series.",
-    label: "Your card goes live",
-  },
-  {
-    number: "04",
-    title: "Professional Photo Series",
-    desc: "When a client expresses genuine interest in you, we invite you back for a high-quality professional photo shoot — fully organised and paid for by us. No costs come to you at any stage.",
-    label: "Fully covered",
-  },
-];
-
-const locations = [
-  { city: "Bangkok", flag: "🇹🇭", role: "Active Scouting", type: "home" },
-  { city: "Manila", flag: "🇵🇭", role: "Active Scouting", type: "home" },
-  { city: "Ho Chi Minh City", flag: "🇻🇳", role: "Active Scouting", type: "home" },
-  { city: "London", flag: "🇬🇧", role: "Target Market", type: "global" },
-  { city: "New York", flag: "🇺🇸", role: "Target Market", type: "global" },
-  { city: "Paris", flag: "🇫🇷", role: "Target Market", type: "global" },
+const locationData = [
+  { city: "Bangkok", flag: "🇹🇭", roleKey: "locations_active_scouting", type: "home" },
+  { city: "Manila", flag: "🇵🇭", roleKey: "locations_active_scouting", type: "home" },
+  { city: "Ho Chi Minh City", flag: "🇻🇳", roleKey: "locations_active_scouting", type: "home" },
+  { city: "London", flag: "🇬🇧", roleKey: "locations_target_market", type: "global" },
+  { city: "New York", flag: "🇺🇸", roleKey: "locations_target_market", type: "global" },
+  { city: "Paris", flag: "🇫🇷", roleKey: "locations_target_market", type: "global" },
 ];
 
 export default function HomePage() {
+  const { t } = useLanguage();
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -177,6 +152,79 @@ export default function HomePage() {
   });
   const heroY = useTransform(scrollYProgress, [0, 1], ["0%", "25%"]);
   const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
+
+  const steps = [
+    {
+      number: "01",
+      titleKey: "hiw_step1_title",
+      descKey: "hiw_step1_desc",
+      labelKey: "hiw_step1_label",
+    },
+    {
+      number: "02",
+      titleKey: "hiw_step2_title",
+      descKey: "hiw_step2_desc",
+      labelKey: "hiw_step2_label",
+    },
+    {
+      number: "03",
+      titleKey: "hiw_step3_title",
+      descKey: "hiw_step3_desc",
+      labelKey: "hiw_step3_label",
+    },
+    {
+      number: "04",
+      titleKey: "hiw_step4_title",
+      descKey: "hiw_step4_desc",
+      labelKey: "hiw_step4_label",
+    },
+  ];
+
+  const editorialServices = [
+    {
+      icon: "◆",
+      titleKey: "service1_title",
+      descKey: "service1_desc",
+      tags: ["Fashion Week", "Designer Shows", "Haute Couture"],
+    },
+    {
+      icon: "◆",
+      titleKey: "service2_title",
+      descKey: "service2_desc",
+      tags: ["Magazines", "Lookbooks", "Print Ads"],
+    },
+    {
+      icon: "◆",
+      titleKey: "service3_title",
+      descKey: "service3_desc",
+      tags: ["Social Media", "Advertising", "Brand Deals"],
+    },
+  ];
+
+  const exclusiveCards = [
+    {
+      titleKey: "exclusive_card1_title",
+      descKey: "exclusive_card1_desc",
+      noteKey: "exclusive_card1_note",
+    },
+    {
+      titleKey: "exclusive_card2_title",
+      descKey: "exclusive_card2_desc",
+      noteKey: "exclusive_card2_note",
+    },
+    {
+      titleKey: "exclusive_card3_title",
+      descKey: "exclusive_card3_desc",
+      noteKey: "exclusive_card3_note",
+    },
+  ];
+
+  const exclusiveStandards = [
+    { labelKey: "exclusive_std1_label", subKey: "exclusive_std1_sub" },
+    { labelKey: "exclusive_std2_label", subKey: "exclusive_std2_sub" },
+    { labelKey: "exclusive_std3_label", subKey: "exclusive_std3_sub" },
+    { labelKey: "exclusive_std4_label", subKey: "exclusive_std4_sub" },
+  ];
 
   return (
     <>
@@ -208,7 +256,7 @@ export default function HomePage() {
               className="inline-block text-[#E8D5A3] text-xs tracking-[0.35em] uppercase mb-4"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Asia&apos;s Premier Modelling Agency
+              {t("hero_tagline")}
             </span>
           </motion.div>
 
@@ -220,9 +268,9 @@ export default function HomePage() {
             className="text-5xl sm:text-6xl lg:text-8xl font-light text-[#FAF7F2] leading-[1.05] tracking-[-0.01em] mb-6 max-w-3xl"
             style={{ fontFamily: "var(--font-cormorant)" }}
           >
-            Your Story
+            {t("hero_heading1")}
             <br />
-            <em className="italic text-[#E8D5A3]">Begins Here.</em>
+            <em className="italic text-[#E8D5A3]">{t("hero_heading2")}</em>
           </motion.h1>
 
           <motion.p
@@ -233,8 +281,7 @@ export default function HomePage() {
             className="text-[#FAF7F2]/70 text-base lg:text-lg max-w-md leading-relaxed mb-10"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            We discover authentic talent from Thailand, the Philippines, and
-            Vietnam — and connect them with London, New York, and Paris.
+            {t("hero_subtitle")}
           </motion.p>
 
           <motion.div
@@ -249,7 +296,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#C9A96E] text-[#2C2C2C] text-sm tracking-[0.08em] uppercase font-medium hover:bg-[#E8D5A3] transition-all duration-300 group"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Apply for Casting
+              {t("hero_cta_primary")}
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform duration-300" />
             </Link>
             <a
@@ -257,7 +304,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-[#FAF7F2]/30 text-[#FAF7F2] text-sm tracking-[0.08em] uppercase hover:border-[#FAF7F2]/70 transition-all duration-300"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              View Portfolio
+              {t("hero_cta_secondary")}
             </a>
           </motion.div>
         </motion.div>
@@ -303,15 +350,15 @@ export default function HomePage() {
             className="text-xs tracking-[0.3em] uppercase text-[#C9A96E] mb-4 block"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            Our Talent
+            {t("portfolio_label")}
           </span>
           <h2
             className="text-4xl lg:text-6xl font-light leading-tight text-[#2C2C2C]"
             style={{ fontFamily: "var(--font-cormorant)" }}
           >
-            A New Generation
+            {t("portfolio_heading1")}
             <br />
-            <em className="italic text-[#8A7F75]">of Faces</em>
+            <em className="italic text-[#8A7F75]">{t("portfolio_heading2")}</em>
           </h2>
         </motion.div>
 
@@ -359,14 +406,14 @@ export default function HomePage() {
           className="mt-12 text-center"
         >
           <p className="text-[#8A7F75] text-sm mb-6" style={{ fontFamily: "var(--font-dm-sans)" }}>
-            Example portraits — your real portfolio starts after your casting.
+            {t("portfolio_note")}
           </p>
           <Link
             href="/apply"
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#2C2C2C] text-[#FAF7F2] text-sm tracking-[0.08em] uppercase hover:bg-[#C9A96E] hover:text-[#2C2C2C] transition-all duration-300 group"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            Become Part of Aurra
+            {t("portfolio_cta")}
             <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
@@ -385,14 +432,13 @@ export default function HomePage() {
             className="text-xs tracking-[0.3em] uppercase text-[#C9A96E] mb-4 block"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            What Makes Us Different
+            {t("different_label")}
           </span>
           <h2
             className="text-4xl lg:text-6xl font-light leading-tight text-[#2C2C2C]"
             style={{ fontFamily: "var(--font-cormorant)" }}
           >
-            Beauty Has{" "}
-            <em className="italic text-[#C9A96E]">No Standard Size.</em>
+            {t("different_heading")}
           </h2>
         </motion.div>
 
@@ -413,15 +459,13 @@ export default function HomePage() {
               className="text-2xl lg:text-3xl font-light text-[#2C2C2C] mb-4"
               style={{ fontFamily: "var(--font-cormorant)" }}
             >
-              We Want <em className="italic">Real.</em>
+              {t("card_natural_title")}
             </h3>
             <p
               className="text-[#8A7F75] text-base leading-relaxed"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              We are not looking for a manufactured look. We scout for natural beauty —
-              authentic faces, genuine personality, and the kind of presence that a camera
-              cannot fake. No heavy editing, no unrealistic expectations.
+              {t("card_natural_desc")}
             </p>
           </motion.div>
 
@@ -441,23 +485,19 @@ export default function HomePage() {
               className="text-2xl lg:text-3xl font-light text-[#FAF7F2] mb-4"
               style={{ fontFamily: "var(--font-cormorant)" }}
             >
-              Height Is{" "}
-              <em className="italic text-[#C9A96E]">Not a Limit.</em>
+              {t("card_petite_title")}
             </h3>
             <p
               className="text-[#8A7F75] text-base leading-relaxed"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Traditional agencies often set rigid height requirements. We don&apos;t.
-              Petite and smaller models bring a unique, sought-after aesthetic to
-              editorial, commercial, and intimate content — and we actively seek
-              out that talent. If you have the look, we want to meet you.
+              {t("card_petite_desc")}
             </p>
             <p
               className="text-[#8A7F75] text-base leading-relaxed mt-4"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Our initial casting talk takes only <span className="text-[#C9A96E]">15–30 minutes</span> — a relaxed, no-pressure conversation to get to know you.
+              {t("card_petite_desc2")}
             </p>
           </motion.div>
         </div>
@@ -475,7 +515,7 @@ export default function HomePage() {
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#C9A96E] text-[#2C2C2C] text-sm tracking-[0.08em] uppercase hover:bg-[#2C2C2C] hover:text-[#FAF7F2] transition-all duration-300 group"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            Apply — No Matter Your Size
+            {t("card_cta")}
             <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
@@ -492,12 +532,12 @@ export default function HomePage() {
             className="mb-16 lg:mb-20"
           >
             <span className="text-xs tracking-[0.3em] uppercase text-[#C9A96E] mb-4 block" style={{ fontFamily: "var(--font-dm-sans)" }}>
-              The Process
+              {t("hiw_label")}
             </span>
             <h2 className="text-4xl lg:text-6xl font-light leading-tight text-[#2C2C2C]" style={{ fontFamily: "var(--font-cormorant)" }}>
-              From First Talk
+              {t("hiw_heading1")}
               <br />
-              <em className="italic text-[#8A7F75]">to Professional Shoot</em>
+              <em className="italic text-[#8A7F75]">{t("hiw_heading2")}</em>
             </h2>
           </motion.div>
 
@@ -522,13 +562,13 @@ export default function HomePage() {
                     className="inline-block px-3 py-1 rounded-full bg-[#F0E6D3] text-[#8A7F75] text-xs tracking-[0.15em] uppercase mb-4"
                     style={{ fontFamily: "var(--font-dm-sans)" }}
                   >
-                    {step.label}
+                    {t(step.labelKey)}
                   </span>
                   <h3 className="text-2xl lg:text-3xl font-light text-[#2C2C2C] mb-4" style={{ fontFamily: "var(--font-cormorant)" }}>
-                    {step.title}
+                    {t(step.titleKey)}
                   </h3>
                   <p className="text-[#8A7F75] text-sm leading-relaxed" style={{ fontFamily: "var(--font-dm-sans)" }}>
-                    {step.desc}
+                    {t(step.descKey)}
                   </p>
                 </div>
               </motion.div>
@@ -548,7 +588,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-3 px-10 py-4 rounded-full bg-[#C9A96E] text-[#2C2C2C] text-sm tracking-[0.08em] uppercase font-medium hover:bg-[#2C2C2C] hover:text-[#FAF7F2] transition-all duration-300 group"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Start Your Application
+              {t("hiw_cta")}
               <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </motion.div>
@@ -565,12 +605,12 @@ export default function HomePage() {
           className="mb-16"
         >
           <span className="text-xs tracking-[0.3em] uppercase text-[#C9A96E] mb-4 block" style={{ fontFamily: "var(--font-dm-sans)" }}>
-            Where We Scout
+            {t("locations_label")}
           </span>
           <h2 className="text-4xl lg:text-6xl font-light leading-tight text-[#2C2C2C]" style={{ fontFamily: "var(--font-cormorant)" }}>
-            Our Search Area —
+            {t("locations_heading1")}
             <br />
-            <em className="italic text-[#8A7F75]">Asia to the World</em>
+            <em className="italic text-[#8A7F75]">{t("locations_heading2")}</em>
           </h2>
         </motion.div>
 
@@ -584,14 +624,14 @@ export default function HomePage() {
           >
             <div className="mb-8">
               <span className="text-[10px] tracking-[0.35em] uppercase text-[#C9A96E]" style={{ fontFamily: "var(--font-dm-sans)" }}>
-                Scouting Area
+                {t("locations_scouting_area")}
               </span>
               <h3 className="text-3xl lg:text-4xl font-light text-[#FAF7F2] mt-2" style={{ fontFamily: "var(--font-cormorant)" }}>
-                Southeast Asia
+                {t("locations_southeast_asia")}
               </h3>
             </div>
             <div className="space-y-5">
-              {locations.filter((l) => l.type === "home").map((loc, i) => (
+              {locationData.filter((l) => l.type === "home").map((loc, i) => (
                 <motion.div
                   key={loc.city}
                   initial={{ opacity: 0, x: -16 }}
@@ -604,7 +644,7 @@ export default function HomePage() {
                     <span className="text-2xl">{loc.flag}</span>
                     <div>
                       <p className="text-[#FAF7F2] font-light" style={{ fontFamily: "var(--font-dm-sans)" }}>{loc.city}</p>
-                      <p className="text-[#8A7F75] text-xs tracking-[0.1em]" style={{ fontFamily: "var(--font-dm-sans)" }}>{loc.role}</p>
+                      <p className="text-[#8A7F75] text-xs tracking-[0.1em]" style={{ fontFamily: "var(--font-dm-sans)" }}>{t(loc.roleKey)}</p>
                     </div>
                   </div>
                   <MapPin size={14} className="text-[#C9A96E]" />
@@ -623,14 +663,14 @@ export default function HomePage() {
           >
             <div className="mb-8">
               <span className="text-[10px] tracking-[0.35em] uppercase text-[#C9A96E]" style={{ fontFamily: "var(--font-dm-sans)" }}>
-                Target Markets
+                {t("locations_target_markets")}
               </span>
               <h3 className="text-3xl lg:text-4xl font-light text-[#2C2C2C] mt-2" style={{ fontFamily: "var(--font-cormorant)" }}>
-                Global Reach
+                {t("locations_global_reach")}
               </h3>
             </div>
             <div className="space-y-5">
-              {locations.filter((l) => l.type === "global").map((loc, i) => (
+              {locationData.filter((l) => l.type === "global").map((loc, i) => (
                 <motion.div
                   key={loc.city}
                   initial={{ opacity: 0, x: 16 }}
@@ -643,7 +683,7 @@ export default function HomePage() {
                     <span className="text-2xl">{loc.flag}</span>
                     <div>
                       <p className="text-[#2C2C2C] font-light" style={{ fontFamily: "var(--font-dm-sans)" }}>{loc.city}</p>
-                      <p className="text-[#8A7F75] text-xs tracking-[0.1em]" style={{ fontFamily: "var(--font-dm-sans)" }}>{loc.role}</p>
+                      <p className="text-[#8A7F75] text-xs tracking-[0.1em]" style={{ fontFamily: "var(--font-dm-sans)" }}>{t(loc.roleKey)}</p>
                     </div>
                   </div>
                   <MapPin size={14} className="text-[#8A7F75]" />
@@ -664,42 +704,22 @@ export default function HomePage() {
           className="mb-16"
         >
           <span className="text-xs tracking-[0.3em] uppercase text-[#C9A96E] mb-4 block" style={{ fontFamily: "var(--font-dm-sans)" }}>
-            For Agencies & Brands
+            {t("editorial_label")}
           </span>
           <h2 className="text-4xl lg:text-6xl font-light leading-tight text-[#2C2C2C]" style={{ fontFamily: "var(--font-cormorant)" }}>
-            Editorial &amp; Commercial
+            {t("editorial_heading1")}
             <br />
-            <em className="italic text-[#8A7F75]">Photography</em>
+            <em className="italic text-[#8A7F75]">{t("editorial_heading2")}</em>
           </h2>
           <p className="mt-6 text-[#8A7F75] text-base leading-relaxed max-w-xl" style={{ fontFamily: "var(--font-dm-sans)" }}>
-            Our models are available for runway shows, advertising campaigns, fashion editorials,
-            lookbooks, and brand collaborations — professionally managed and agency-ready.
+            {t("editorial_subtitle")}
           </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {[
-            {
-              icon: "◆",
-              title: "Runway & Fashion",
-              desc: "Catwalk presentations for local and international fashion weeks. Our models are trained for stage presence and movement.",
-              tags: ["Fashion Week", "Designer Shows", "Haute Couture"],
-            },
-            {
-              icon: "◆",
-              title: "Editorial & Print",
-              desc: "Magazine covers, editorial spreads, and print campaigns. We work with established and emerging photographers across Asia.",
-              tags: ["Magazines", "Lookbooks", "Print Ads"],
-            },
-            {
-              icon: "◆",
-              title: "Brand & Commercial",
-              desc: "Product campaigns, social media content, and brand ambassador roles — delivered on time and on-brief.",
-              tags: ["Social Media", "Advertising", "Brand Deals"],
-            },
-          ].map((item, i) => (
+          {editorialServices.map((item, i) => (
             <motion.div
-              key={item.title}
+              key={item.titleKey}
               variants={fadeUp}
               initial="hidden"
               whileInView="visible"
@@ -709,10 +729,10 @@ export default function HomePage() {
             >
               <span className="text-[#C9A96E] text-lg mb-6 block">{item.icon}</span>
               <h3 className="text-2xl font-light text-[#2C2C2C] mb-4" style={{ fontFamily: "var(--font-cormorant)" }}>
-                {item.title}
+                {t(item.titleKey)}
               </h3>
               <p className="text-[#8A7F75] text-sm leading-relaxed mb-6" style={{ fontFamily: "var(--font-dm-sans)" }}>
-                {item.desc}
+                {t(item.descKey)}
               </p>
               <div className="flex flex-wrap gap-2">
                 {item.tags.map((tag) => (
@@ -741,7 +761,7 @@ export default function HomePage() {
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#2C2C2C] text-[#FAF7F2] text-sm tracking-[0.08em] uppercase hover:bg-[#C9A96E] hover:text-[#2C2C2C] transition-all duration-300 group"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            Apply as Model
+            {t("editorial_apply")}
             <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
           </Link>
           <a
@@ -749,7 +769,7 @@ export default function HomePage() {
             className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-[#2C2C2C]/20 text-[#2C2C2C] text-sm tracking-[0.08em] uppercase hover:border-[#C9A96E] hover:text-[#C9A96E] transition-all duration-300"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            Book a Model
+            {t("editorial_book")}
           </a>
         </motion.div>
       </section>
@@ -778,47 +798,30 @@ export default function HomePage() {
                 className="px-3 py-1 rounded-full border border-[#C9A96E]/40 text-[#C9A96E] text-[10px] tracking-[0.3em] uppercase"
                 style={{ fontFamily: "var(--font-dm-sans)" }}
               >
-                Adults Only · 18+
+                {t("exclusive_label")}
               </span>
             </div>
             <h2
               className="text-4xl lg:text-6xl font-light leading-tight text-[#FAF7F2]"
               style={{ fontFamily: "var(--font-cormorant)" }}
             >
-              Exclusive &amp; Intimate
+              {t("exclusive_heading1")}
               <br />
-              <em className="italic text-[#C9A96E]">Content</em>
+              <em className="italic text-[#C9A96E]">{t("exclusive_heading2")}</em>
             </h2>
             <p
               className="mt-6 text-[#8A7F75] text-base leading-relaxed max-w-xl"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              A curated selection of our talent is available for tasteful artistic and intimate photography —
-              handled with full professionalism, discretion, and consent. All models are 18+ verified.
+              {t("exclusive_desc")}
             </p>
           </motion.div>
 
           {/* Cards */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-14">
-            {[
-              {
-                title: "Boudoir",
-                desc: "Elegant, intimate portraiture in a private setting. Artistic and sensual — never explicit. Perfect for premium publications and private collectors.",
-                note: "Tasteful · Artistic",
-              },
-              {
-                title: "Lingerie & Swimwear",
-                desc: "High-quality campaigns for lingerie brands, swimwear labels, and lifestyle publications requiring confident, natural presentation.",
-                note: "Commercial · Editorial",
-              },
-              {
-                title: "Artistic Nude",
-                desc: "Fine-art photography for serious photographers and collectors. Always conducted in a safe, respectful, and fully consensual professional environment.",
-                note: "Fine Art · Exclusive",
-              },
-            ].map((item, i) => (
+            {exclusiveCards.map((item, i) => (
               <motion.div
-                key={item.title}
+                key={item.titleKey}
                 variants={fadeUp}
                 initial="hidden"
                 whileInView="visible"
@@ -831,19 +834,19 @@ export default function HomePage() {
                   className="text-[10px] tracking-[0.3em] uppercase text-[#C9A96E]/70 mb-3 block"
                   style={{ fontFamily: "var(--font-dm-sans)" }}
                 >
-                  {item.note}
+                  {t(item.noteKey)}
                 </span>
                 <h3
                   className="text-2xl lg:text-3xl font-light text-[#FAF7F2] mb-4"
                   style={{ fontFamily: "var(--font-cormorant)" }}
                 >
-                  {item.title}
+                  {t(item.titleKey)}
                 </h3>
                 <p
                   className="text-[#8A7F75] text-sm leading-relaxed"
                   style={{ fontFamily: "var(--font-dm-sans)" }}
                 >
-                  {item.desc}
+                  {t(item.descKey)}
                 </p>
               </motion.div>
             ))}
@@ -857,24 +860,19 @@ export default function HomePage() {
             viewport={{ once: true }}
             className="border-t border-[#C9A96E]/15 pt-10 grid grid-cols-2 md:grid-cols-4 gap-6 mb-12"
           >
-            {[
-              { label: "Verified 18+", sub: "All models age-verified" },
-              { label: "Fully Consensual", sub: "Written agreement always" },
-              { label: "Private & Discreet", sub: "NDA available on request" },
-              { label: "Professional", sub: "Vetted photographers only" },
-            ].map((item) => (
-              <div key={item.label}>
+            {exclusiveStandards.map((item) => (
+              <div key={item.labelKey}>
                 <p
                   className="text-[#C9A96E] text-sm font-medium mb-1"
                   style={{ fontFamily: "var(--font-dm-sans)" }}
                 >
-                  {item.label}
+                  {t(item.labelKey)}
                 </p>
                 <p
                   className="text-[#8A7F75] text-xs"
                   style={{ fontFamily: "var(--font-dm-sans)" }}
                 >
-                  {item.sub}
+                  {t(item.subKey)}
                 </p>
               </div>
             ))}
@@ -893,7 +891,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#C9A96E] text-[#1a1714] text-sm tracking-[0.08em] uppercase font-medium hover:bg-[#E8D5A3] transition-all duration-300 group"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Enquire Privately
+              {t("exclusive_cta_enquire")}
               <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
             </a>
             <Link
@@ -901,7 +899,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full border border-[#FAF7F2]/15 text-[#FAF7F2]/70 text-sm tracking-[0.08em] uppercase hover:border-[#C9A96E]/40 hover:text-[#C9A96E] transition-all duration-300"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Apply as Model
+              {t("exclusive_cta_apply")}
             </Link>
           </motion.div>
 
@@ -914,9 +912,7 @@ export default function HomePage() {
             className="mt-10 text-[#8A7F75]/50 text-xs leading-relaxed max-w-2xl"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            All content produced through Aurra Models Exclusive is strictly legal, produced with fully
-            informed adult consent, and complies with applicable laws in all operating jurisdictions.
-            Models must be 18 years or older. Age verification is mandatory.
+            {t("exclusive_disclaimer")}
           </motion.p>
         </div>
       </section>
@@ -957,13 +953,13 @@ export default function HomePage() {
               className="text-xs tracking-[0.3em] uppercase text-[#C9A96E] mb-4 block"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Co-Founder · Asia
+              {t("founder_label")}
             </span>
             <h2
               className="text-4xl lg:text-5xl font-light leading-tight text-[#2C2C2C] mb-6"
               style={{ fontFamily: "var(--font-cormorant)" }}
             >
-              Meet <em className="italic text-[#C9A96E]">Adrian.</em>
+              {t("founder_heading")}
             </h2>
 
             <div className="space-y-4 mb-8">
@@ -971,27 +967,24 @@ export default function HomePage() {
                 className="text-[#8A7F75] text-base leading-relaxed"
                 style={{ fontFamily: "var(--font-dm-sans)" }}
               >
-                Adrian is co-founder of Aurra Models and heads the Asia division —
-                scouting and developing talent across Thailand, the Philippines, and Vietnam.
+                {t("founder_para1")}
               </p>
               <p
                 className="text-[#8A7F75] text-base leading-relaxed"
                 style={{ fontFamily: "var(--font-dm-sans)" }}
               >
-                Together with his partner Joshua, who represents Aurra in London, New York,
-                and Paris, Adrian builds the bridge between Southeast Asia&apos;s most promising
-                faces and the world&apos;s top fashion markets.
+                {t("founder_para2")}
               </p>
             </div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-6 mb-10 pt-8 border-t border-[#E8C4B0]/40">
               {[
-                { num: "3", label: "Asian Markets" },
-                { num: "6", label: "Global Cities" },
-                { num: "18+", label: "Only" },
+                { num: "3", labelKey: "founder_stat1" },
+                { num: "6", labelKey: "founder_stat2" },
+                { num: "18+", labelKey: "founder_stat3" },
               ].map((stat) => (
-                <div key={stat.label}>
+                <div key={stat.labelKey}>
                   <p
                     className="text-3xl font-light text-[#C9A96E]"
                     style={{ fontFamily: "var(--font-cormorant)" }}
@@ -1002,7 +995,7 @@ export default function HomePage() {
                     className="text-xs tracking-[0.15em] uppercase text-[#8A7F75] mt-1"
                     style={{ fontFamily: "var(--font-dm-sans)" }}
                   >
-                    {stat.label}
+                    {t(stat.labelKey)}
                   </p>
                 </div>
               ))}
@@ -1013,7 +1006,7 @@ export default function HomePage() {
               className="inline-flex items-center gap-3 px-8 py-4 rounded-full bg-[#2C2C2C] text-[#FAF7F2] text-sm tracking-[0.08em] uppercase hover:bg-[#C9A96E] hover:text-[#2C2C2C] transition-all duration-300 group"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Contact Adrian directly
+              {t("founder_cta")}
               <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
             </a>
           </motion.div>
@@ -1030,27 +1023,26 @@ export default function HomePage() {
             viewport={{ once: true }}
           >
             <span className="text-xs tracking-[0.3em] uppercase text-[#C9A96E] mb-6 block" style={{ fontFamily: "var(--font-dm-sans)" }}>
-              Ready?
+              {t("cta_label")}
             </span>
             <h2 className="text-5xl lg:text-7xl font-light leading-tight text-[#2C2C2C] mb-8" style={{ fontFamily: "var(--font-cormorant)" }}>
-              Your Casting Awaits.
+              {t("cta_heading1")}
               <br />
-              <em className="italic text-[#C9A96E]">No Experience Needed.</em>
+              <em className="italic text-[#C9A96E]">{t("cta_heading2")}</em>
             </h2>
             <p className="text-[#8A7F75] text-base lg:text-lg leading-relaxed mb-12 max-w-xl mx-auto" style={{ fontFamily: "var(--font-dm-sans)" }}>
-              We believe in raw talent and authentic beauty. If you&apos;re between
-              18 and 25 and dreaming of a career in fashion — this is your moment.
+              {t("cta_desc")}
             </p>
             <Link
               href="/apply"
               className="inline-flex items-center gap-4 px-10 py-5 rounded-full bg-[#2C2C2C] text-[#FAF7F2] text-sm tracking-[0.1em] uppercase hover:bg-[#C9A96E] hover:text-[#2C2C2C] transition-all duration-400 group"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Apply for Your Casting
+              {t("cta_button")}
               <ArrowRight size={16} className="group-hover:translate-x-1.5 transition-transform duration-300" />
             </Link>
             <p className="mt-6 text-xs text-[#8A7F75] tracking-wide" style={{ fontFamily: "var(--font-dm-sans)" }}>
-              Free · No commitment · Response within 48 hours
+              {t("cta_note")}
             </p>
           </motion.div>
         </div>

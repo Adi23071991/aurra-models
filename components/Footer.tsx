@@ -1,7 +1,12 @@
+"use client";
+
 import Link from "next/link";
 import { Mail } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   const locations = [
     { city: "Bangkok", country: "Thailand" },
     { city: "Manila", country: "Philippines" },
@@ -36,8 +41,7 @@ export default function Footer() {
               className="text-[#8A7F75] text-sm leading-relaxed max-w-xs"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Connecting Asia&apos;s brightest talent with the world&apos;s most
-              prestigious fashion markets.
+              {t("footer_tagline")}
             </p>
             <div className="flex gap-4 mt-6">
               <a
@@ -56,14 +60,14 @@ export default function Footer() {
               className="text-xs tracking-[0.25em] uppercase text-[#C9A96E] mb-6"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Navigation
+              {t("footer_nav_label")}
             </h4>
             <ul className="space-y-3">
               {[
-                { href: "/#portfolio", label: "Portfolio" },
-                { href: "/#how-it-works", label: "How It Works" },
-                { href: "/#locations", label: "Locations" },
-                { href: "/apply", label: "Apply for Casting" },
+                { href: "/#portfolio", labelKey: "footer_nav_portfolio" },
+                { href: "/#how-it-works", labelKey: "footer_nav_howitworks" },
+                { href: "/#locations", labelKey: "footer_nav_locations" },
+                { href: "/apply", labelKey: "footer_nav_apply" },
               ].map((link) => (
                 <li key={link.href}>
                   <Link
@@ -71,7 +75,7 @@ export default function Footer() {
                     className="text-sm text-[#8A7F75] hover:text-[#FAF7F2] transition-colors duration-300"
                     style={{ fontFamily: "var(--font-dm-sans)" }}
                   >
-                    {link.label}
+                    {t(link.labelKey)}
                   </Link>
                 </li>
               ))}
@@ -84,7 +88,7 @@ export default function Footer() {
               className="text-xs tracking-[0.25em] uppercase text-[#C9A96E] mb-6"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Our Locations
+              {t("footer_locations_label")}
             </h4>
             <ul className="space-y-2">
               {locations.map((loc) => (
@@ -113,7 +117,7 @@ export default function Footer() {
             className="text-xs text-[#8A7F75]"
             style={{ fontFamily: "var(--font-dm-sans)" }}
           >
-            © {new Date().getFullYear()} Aurra Models. All rights reserved.
+            © {new Date().getFullYear()} Aurra Models. {t("footer_copyright")}
           </p>
           <div className="flex gap-6">
             <Link
@@ -121,14 +125,14 @@ export default function Footer() {
               className="text-xs text-[#8A7F75] hover:text-[#FAF7F2] transition-colors duration-300"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Impressum
+              {t("footer_impressum")}
             </Link>
             <Link
               href="/datenschutz"
               className="text-xs text-[#8A7F75] hover:text-[#FAF7F2] transition-colors duration-300"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Datenschutz
+              {t("footer_datenschutz")}
             </Link>
           </div>
         </div>

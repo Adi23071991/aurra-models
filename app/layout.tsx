@@ -3,6 +3,7 @@ import { Cormorant_Garamond, DM_Sans } from "next/font/google";
 import "./globals.css";
 import CookieBanner from "@/components/CookieBanner";
 import WhatsAppButton from "@/components/WhatsAppButton";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 
 const cormorant = Cormorant_Garamond({
   variable: "--font-cormorant",
@@ -45,9 +46,11 @@ export default function RootLayout({
       className={`${cormorant.variable} ${dmSans.variable} h-full`}
     >
       <body className="min-h-full flex flex-col bg-[#FAF7F2] text-[#2C2C2C] antialiased">
-        {children}
-        <CookieBanner />
-        <WhatsAppButton />
+        <LanguageProvider>
+          {children}
+          <CookieBanner />
+          <WhatsAppButton />
+        </LanguageProvider>
       </body>
     </html>
   );

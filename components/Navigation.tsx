@@ -4,10 +4,20 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { useLanguage } from "@/contexts/LanguageContext";
+import type { Language } from "@/lib/translations";
+
+const LANGS: { code: Language; label: string }[] = [
+  { code: "en", label: "EN" },
+  { code: "th", label: "TH" },
+  { code: "vi", label: "VI" },
+  { code: "fil", label: "FIL" },
+];
 
 export default function Navigation() {
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const { lang, setLang, t } = useLanguage();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 40);
@@ -16,11 +26,11 @@ export default function Navigation() {
   }, []);
 
   const links = [
-    { href: "/#portfolio", label: "Portfolio" },
-    { href: "/#editorial", label: "Editorial" },
-    { href: "/#exclusive", label: "18+ Exclusive" },
-    { href: "/#locations", label: "Scouting Areas" },
-    { href: "/apply", label: "Apply Now" },
+    { href: "/#portfolio", labelKey: "nav_portfolio" },
+    { href: "/#editorial", labelKey: "nav_editorial" },
+    { href: "/#exclusive", labelKey: "nav_exclusive" },
+    { href: "/#locations", labelKey: "nav_scouting" },
+    { href: "/apply", labelKey: "nav_apply" },
   ];
 
   return (
@@ -52,7 +62,7 @@ export default function Navigation() {
             </span>
           </Link>
 
-          {/* Desktop Links */}
+          {/* Desktop Links + Language Switcher */}
           <div className="hidden md:flex items-center gap-8">
             {links.slice(0, 4).map((link) => (
               <Link
@@ -61,7 +71,7 @@ export default function Navigation() {
                 className="text-sm tracking-[0.08em] text-[#8A7F75] hover:text-[#2C2C2C] transition-colors duration-300 uppercase"
                 style={{ fontFamily: "var(--font-dm-sans)" }}
               >
-                {link.label}
+                {t(link.labelKey)}
               </Link>
             ))}
             <Link
@@ -69,8 +79,30 @@ export default function Navigation() {
               className="ml-4 px-6 py-2.5 rounded-full bg-[#2C2C2C] text-[#FAF7F2] text-sm tracking-[0.08em] uppercase hover:bg-[#C9A96E] transition-all duration-300"
               style={{ fontFamily: "var(--font-dm-sans)" }}
             >
-              Apply Now
+              {t("nav_apply")}
             </Link>
+            {/* Language Switcher Desktop */}
+            <div className="flex items-center gap-1.5 ml-2 border-l border-[#8A7F75]/20 pl-4">
+              {LANGS.map((l, i) => (
+                <span key={l.code} className="flex items-center gap-1.5">
+                  <button
+                    onClick={() => setLang(l.code)}
+                    className={`text-[10px] tracking-[0.1em] uppercase transition-colors duration-200 ${
+                      lang === l.code
+                        ? "text-[#C9A96E] font-medium"
+                        : "text-[#8A7F75] hover:text-[#2C2C2C]"
+                    }`}
+                    style={{ fontFamily: "var(--font-dm-sans)" }}
+                    aria-label={`Switch to ${l.label}`}
+                  >
+                    {l.label}
+                  </button>
+                  {i < LANGS.length - 1 && (
+                    <span className="text-[#8A7F75]/40 text-[10px]">·</span>
+                  )}
+                </span>
+              ))}
+            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -111,10 +143,37 @@ export default function Navigation() {
                   }`}
                   style={{ fontFamily: "var(--font-cormorant)" }}
                 >
-                  {link.label}
+                  {t(link.labelKey)}
                 </Link>
               </motion.div>
             ))}
+
+            {/* Language Switcher Mobile */}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: links.length * 0.08 + 0.05 }}
+              className="flex items-center gap-3 mt-4 border-t border-[#8A7F75]/20 pt-6"
+            >
+              {LANGS.map((l, i) => (
+                <span key={l.code} className="flex items-center gap-3">
+                  <button
+                    onClick={() => { setLang(l.code); setMenuOpen(false); }}
+                    className={`text-sm tracking-[0.12em] uppercase transition-colors duration-200 ${
+                      lang === l.code
+                        ? "text-[#C9A96E]"
+                        : "text-[#8A7F75] hover:text-[#2C2C2C]"
+                    }`}
+                    style={{ fontFamily: "var(--font-dm-sans)" }}
+                  >
+                    {l.label}
+                  </button>
+                  {i < LANGS.length - 1 && (
+                    <span className="text-[#8A7F75]/30">·</span>
+                  )}
+                </span>
+              ))}
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
